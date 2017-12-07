@@ -12,7 +12,7 @@ describe('kaztransgaz-balance', function() {
   // find
   describe('get()', function() {
     it('should get a balance with given account ID', function(done) {
-      kbalance.get({id: '553105-658'}, function(err, result) {
+      kbalance.get({id: '553105658'}, function(err, result) {
         if(err) return done(err);
 
         expect(err).to.be.equal(null);
@@ -44,10 +44,9 @@ describe('kaztransgaz-balance', function() {
 
     it('should not return any balance (bad account ID)', function(done) {
       kbalance.get({id: '.'}, function(err, result) {
-        if(err) return done(err);
+        if(!err) return done('No error!');
 
-        expect(err).to.be.equal(null);
-        expect(result).to.be.a('object');
+        expect(result).to.be.equal(undefined);
         done();
       });
     });

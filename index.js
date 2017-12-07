@@ -28,6 +28,19 @@ module.exports = (function () {
     return undefined;
   };
 
+  var normallizeID = function (id) {
+    if (id.length === 10) {
+      if (id.indexOf("-") !== -1) {
+        return id;
+      }
+    } else if (id.length === 9) {
+      var firstDigits  = id.substr(0, 6);
+      var secondDigits = id.substr(6, 3);
+      return firstDigits + '-' + secondDigits;
+    }
+    return undefined;
+  };
+
   var get = function get(options, callback) {
 
     if (typeof callback !== 'function')
@@ -41,10 +54,14 @@ module.exports = (function () {
     if (!options.id)
       return callback('Missing ID input');
 
-    var result  = [],
-        timeout = options.timeout || defTimeout;
+    var accountID = normallizeID(options.id);
+    if (accountID === undefined) {
+      return callback('Invalid account ID');
+    }
 
-    request.post({url: url, timeout: timeout, form: {abonentID: options.id}}, function (err, res, body) {
+    var timeout = options.timeout || defTimeout;
+
+    request.post({url: url, timeout: timeout, form: {abonentID: accountID}}, function (err, res, body) {
 
       if (err) return callback(err);
       if (res.statusCode !== 200) return callback(new Error('request failed (' + res.statusCode + ')'));
@@ -63,17 +80,16 @@ module.exports = (function () {
           balance = getAttribute(body, "თქვენი ბალანსი შეადგენს"),
           amount  = getAttribute(body, "გადასახდელი თანხა");
 
-      if(name === undefined || address === undefined) {
+      if (name === undefined || address === undefined) {
         return callback(null, {
-          "balance": {
-          }
+          "balance": {}
         });
       }
 
       // Parse body
       var result = {
         "balance": {
-          "id":             options.id,
+          "id":             accountID,
           "name":           name,
           "address":        address,
           "balance":        balance,

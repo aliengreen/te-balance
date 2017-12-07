@@ -7,13 +7,13 @@ Kaztransgaz Balance is a module for obtaining Kaztransgaz account balance. Curre
 ## Installation
 
 ```bash
-npm install kaztransgaz-balance-js
+npm install aliengreen/kaztransgaz-balance
 ```
 
 ## Usage
 
 ```javascript
-var kbalance = require('kaztrans-balance-js');
+var kbalance = require('kaztransgaz-balance-js');
 
 
 kbalance.get({id: '153131-158'}, function(err, result) {
@@ -26,7 +26,7 @@ kbalance.get({id: '153131-158'}, function(err, result) {
   {
     "balance": {
       "id": "153131-158",
-      "name": "მგელაძე კუკური",
+      "name": "მგელაძე კუკური", 
       "address": "ნუცუბიძე, ჯ. ბუასილის N9, შენ. 12, ბინა 43",
       "balance": "0",
       "payable_amount": "1",
