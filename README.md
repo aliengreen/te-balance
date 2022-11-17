@@ -1,22 +1,22 @@
-# Kaztransgaz Balance 
+# Tbilisi Energy Balance 
 
 
-Kaztransgaz Balance is a module for obtaining Kaztransgaz account balance. Current version works for Tbilisi city only.
+Tbilisi Energy Balance is a module for obtaining Tbilisi Energy account balance. Current version works for Tbilisi city only.
 
 
 ## Installation
 
 ```bash
-npm install aliengreen/kaztransgaz-balance
+npm install https://github.com/aliengreen/te-balance
 ```
 
 ## Usage
 
 ```javascript
-var kbalance = require('kaztransgaz-balance-js');
+var tebalance = require('te-balance-js');
 
 
-kbalance.get({id: '153131-158'}, function(err, result) {
+tebalance.get({id: '153131-158'}, function(err, result) {
   if(err) console.log(err);
 
   console.log(JSON.stringify(result, null, 2));
@@ -37,7 +37,7 @@ kbalance.get({id: '153131-158'}, function(err, result) {
 
 ## Notes
 
-- It uses `https://www.ktg-tbilisi.ge/balance` "service"
+- It uses `https://te.ge/webpay/` "service"
 
 ## License
 

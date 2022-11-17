@@ -7,7 +7,7 @@ var kbalance = require('../'),
 
 // Tests
 
-describe('kaztransgaz-balance', function() {
+describe('te-balance', function() {
 
   // find
   describe('get()', function() {

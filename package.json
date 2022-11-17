@@ -1,41 +1,72 @@
 {
-  "name": "kaztransgaz-balance-js",
-  "version": "1.0.0",
-  "description": "A module for obtaining KaztransGaz balance information",
-  "main": "index.js",
-  "scripts": {
-    "lint": "jshint --reporter node_modules/jshint-stylish *.js test/*.js",
-    "lint:build": "jshint --reporter checkstyle *.js test/*.js > reports/jshint-checkstyle.xml",
-    "depcheck": "dependency-check . *.js",
-    "depcheck:unused": "dependency-check ./package.json --unused --no-dev *.js",
-    "test:unit": "mkdir -p reports/ && NODE_ENV=test multi='spec=- xunit=reports/mocha-xunit.xml' istanbul cover _mocha -- --timeout 10000 -R mocha-multi && istanbul check-coverage",
-    "test:coveralls": "cat reports/coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "test": "npm run lint && npm run test:unit"
-  },
-  "repository": {
+  "_from": "git+https://github.com/aliengreen/te-balance.git",
+  "_id": "te-balance-js@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/te-balance-js",
+  "_phantomChildren": {},
+  "_requested": {
     "type": "git",
-    "url": "https://github.com/aliengreen/kaztransgaz-balance.git"
+    "raw": "https://github.com/aliengreen/te-balance",
+    "rawSpec": "https://github.com/aliengreen/te-balance",
+    "saveSpec": "git+https://github.com/aliengreen/te-balance.git",
+    "fetchSpec": "https://github.com/aliengreen/te-balance.git",
+    "gitCommittish": null
   },
-  "keywords": [
-    "kaztransgaz-balance",
-    "balance",
-    "kaztrans",
-    "gaz"
+  "_requiredBy": [
+    "#USER",
+    "/"
   ],
-  "author": "aliengreen",
-  "license": "MIT",
-  "homepage": "http://github.com/aliengreen/kaztransgaz-balance",
+  "_resolved": "git+https://github.com/aliengreen/te-balance.git#45b9548d6cdee830bc4b5ef2f977359138d642c5",
+  "_spec": "https://github.com/aliengreen/te-balance",
+  "_where": "/Users/lashadolidze/MyProjects/te",
+  "author": {
+    "name": "aliengreen"
+  },
+  "bugs": {
+    "url": "https://github.com/aliengreen/te-balance/issues"
+  },
+  "bundleDependencies": false,
   "dependencies": {
+    "node-html-parser": "^6.1.4",
     "request": "2.x.x"
   },
+  "deprecated": false,
+  "description": "A module for obtaining Tbilisi Energy balance information",
   "devDependencies": {
     "chai": "3.5.x",
+    "coveralls": "^2.11.16",
+    "dependency-check": "2.8.x",
+    "istanbul": "0.4.x",
     "jshint": "2.9.x",
     "jshint-stylish": "2.2.x",
     "mocha": "3.2.x",
-    "mocha-multi": "0.10.x",
-    "dependency-check": "2.8.x",
-    "istanbul": "0.4.x",
-    "coveralls": "^2.11.16"
-  }
+    "mocha-multi": "0.10.x"
+  },
+  "homepage": "http://github.com/aliengreen/te-balance",
+  "keywords": [
+    "te-balance",
+    "balance",
+    "kaztrans",
+    "tbilisi energy",
+    "te",
+    "gaz"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "te-balance-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aliengreen/te-balance.git"
+  },
+  "scripts": {
+    "depcheck": "dependency-check . *.js",
+    "depcheck:unused": "dependency-check ./package.json --unused --no-dev *.js",
+    "lint": "jshint --reporter node_modules/jshint-stylish *.js test/*.js",
+    "lint:build": "jshint --reporter checkstyle *.js test/*.js > reports/jshint-checkstyle.xml",
+    "test": "npm run lint && npm run test:unit",
+    "test:coveralls": "cat reports/coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "test:unit": "mkdir -p reports/ && NODE_ENV=test multi='spec=- xunit=reports/mocha-xunit.xml' istanbul cover _mocha -- --timeout 10000 -R mocha-multi && istanbul check-coverage"
+  },
+  "version": "1.0.0"
 }

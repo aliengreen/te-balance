@@ -1,31 +1,47 @@
 /* jslint node: true, sub: true */
 'use strict';
 
+var HTMLParser = require('node-html-parser');
 var request = require('request');
 
 // Init the module
 module.exports = (function () {
 
   var defTimeout = 10000,
-      url        = 'https://www.ktg-tbilisi.ge/balance';
+      url        = 'https://te.ge/webpay/';
 
-  var getAttribute = function (body, name) {
-    var searchString    = name + ": <STRONG>";
-    var searchString2   = name + ": <input type=\"text\" name=\"o.amount\" value=\"";
-    var start_attribute = body.indexOf(searchString);
-    var end_attribute;
-    if (start_attribute !== -1) {
-      end_attribute = body.indexOf("</STRONG>", start_attribute);
-      return body.substr(start_attribute + searchString.length, end_attribute - start_attribute - searchString.length);
-    } else {
-      start_attribute = body.indexOf(searchString2);
-      if (start_attribute !== -1) {
-        end_attribute = body.indexOf("\" autocomplete=\"off\">", start_attribute);
-        return body.substr(start_attribute + searchString2.length, end_attribute - start_attribute - searchString2.length);
+  var getFields = function (body) {
+
+    var ret = {
+        "name":'',
+        "address":'',
+        "balance":'',
+        "payable_amount":'',
+        "last_payment_date":''
+    };
+
+    const root = HTMLParser.parse(body);
+    var h3 = root.querySelectorAll('h3');
+    for (var i = 0; i < h3.length; ++i) {
+      if(h3[i].textContent == "აბონენტი:") {
+        ret.name = h3[++i].textContent;
+      } else if(h3[i].textContent == "მისამართი:") {
+        ret.address = h3[++i].textContent;
+      } else if(h3[i].textContent == "დავალიანება:") {
+        ret.balance = h3[++i].textContent;
+      } else if(h3[i].textContent == "ბოლო ვადა:") {
+        ret.last_payment_date = h3[++i].textContent;
+      } else if(h3[i].textContent == "გადასახდელი თანხა:") {
+        ret.payable_amount = ""; //h3[++i].textContent;
       }
     }
 
-    return undefined;
+    var payable_amount = root.querySelector('#amount');
+    if (payable_amount !== undefined) {
+      ret.payable_amount = payable_amount.getAttribute('value');
+    }
+
+    return ret;
   };
 
   var normallizeID = function (id) {
@@ -74,13 +90,12 @@ module.exports = (function () {
         }
         return callback(new Error('Invalid body content'));
       }
+      console.log(body);
 
-      var name    = getAttribute(body, "აბონენტი"),
-          address = getAttribute(body, "მისამართი"),
-          balance = getAttribute(body, "თქვენი ბალანსი შეადგენს"),
-          amount  = getAttribute(body, "გადასახდელი თანხა");
 
-      if (name === undefined || address === undefined) {
+      var ret = getFields(body);
+
+      if (ret.name === undefined || ret.address === undefined) {
         return callback(null, {
           "balance": {}
         });
@@ -90,10 +105,10 @@ module.exports = (function () {
       var result = {
         "balance": {
           "id":             accountID,
-          "name":           name,
-          "address":        address,
-          "balance":        balance,
-          "payable_amount": amount,
+          "name":           ret.name,
+          "address":        ret.address,
+          "balance":        ret.balance,
+          "payable_amount": ret.payable_amount,
           "currency":       'GEL'
         }
       };
