@@ -90,11 +90,8 @@ module.exports = (function () {
         }
         return callback(new Error('Invalid body content'));
       }
-      console.log(body);
-
-
+      
       var ret = getFields(body);
-
       if (ret.name === undefined || ret.address === undefined) {
         return callback(null, {
           "balance": {}
